@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,4 +45,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'author', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'author', 'id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
 }
